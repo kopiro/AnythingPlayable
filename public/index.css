@@ -1,0 +1,162 @@
+body {
+	color: #fff;
+	font-family: 'Helvetica', 'Tahoma', sans-serif;
+	font-weight: 200;
+	font-size: 12px;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+}
+
+a {
+	color: #fff !important;
+	text-decoration: none !important;
+}
+
+#bg, #art{
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#bg {
+	z-index: -2;
+}
+
+#art {
+	z-index: -1;
+	-webkit-transform: scale(3) translateY(93px);
+	-webkit-filter: blur(4px);
+}
+
+#main {
+	z-index: 1;
+	position: fixed;
+	left: 0px;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	-webkit-box-sizing: border-box;
+	padding: 5px;
+	box-shadow: inset 3px 4px 10px rgba(0,0,0,.5);
+	background-image: -webkit-linear-gradient(top, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%);
+	padding-top: 40px;
+	overflow: auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+#current-name {
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+
+#current-artist {
+	font-size: 12px;
+	margin-bottom: 30px;
+	text-transform: uppercase;
+}
+
+#current-artwork {
+	background-size: cover;
+	width: 220px;
+	height: 220px;
+	display: block;
+	margin: 0 auto;
+	border-radius: 2px;
+	margin-bottom: 20px;
+	box-shadow: 2px 4px 5px rgba(0,0,0,.4);
+}
+
+#status {
+	width: 80%;
+	margin: 0 auto;
+	height: 4px;
+	position: relative;
+	margin-bottom: 4px;
+}
+
+#status-real {
+	background: rgba(255,255,255,.8);
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+}
+
+#info-duration {
+	width: 80%;
+	margin: 0 auto;
+	margin-bottom: 70px;
+	position: relative;
+}
+
+#status-position {
+	left: 0;
+	position: absolute;
+}
+
+#current-duration {
+	right: 0;
+	position: absolute;
+}
+
+#controls {
+	width: 200px;
+	height: 80px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#control-prev, #control-next  {
+	width: 60px;
+	position: absolute;
+	top: 50%;
+	height: 60px;
+	line-height: 60px;
+	margin-top: -30px;
+	-webkit-transition: -webkit-transform .1s;
+	font-size: 26px;
+}
+
+#control-prev {
+	left: 0;
+}
+
+#control-next {
+	right: 0
+}
+
+#control-main {
+	width: 80px;
+	height: 80px;
+	text-align: center;
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 0;
+	margin-left: -40px;
+	font-size: 40px;
+	line-height: 76px;
+	border-radius: 50%;
+	border: 2px solid rgba(255,255,255,.9);
+	-webkit-transition: -webkit-transform .1s;
+}
+
+#control-next:active,
+#control-prev:active {
+	-webkit-transform: scale(1.2);
+}
+
+#control-main:active {
+	-webkit-transform: scale(1.05);
+}
+
+#control-main.fa-play {
+	padding-left: 9px;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.css" />
+	<link rel="stylesheet" href="/public/index.css" />
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//underscorejs.org/underscore-min.js"></script>
+	<script src="/public/hammer.js"></script>
+</head>
+<body>
+
+	<div id="bg"></div>
+	<div id="art"></div>
+
+	<div id="main">
+
+		<div id="current-artwork"></div>
+		<div id="current-c">
+			<h1 id="current-name"></h1>
+			<h2 id="current-artist"></h2>
+		</div>
+
+		<div id="status">
+			<div id="status-real"></div>
+		</div>
+
+		<div id="info-duration">
+			<div id="status-position"></div>
+			<div id="current-duration"></div>
+		</div>
+
+		<div id="controls">
+			<a id="control-prev" class="fa fa-backward"></a>
+			<a id="control-next" class="fa fa-forward"></a>
+			<a id="control-main" class="fa fa-play"></a>
+		</div>
+
+	</div>
+
+	<script src="/public/index.js"></script>
+
+</body>
+</html>
