@@ -39,7 +39,9 @@
  				return callback("No TIFF data");
  			}
 
- 			fs.writeSync(fd, tiffData, 0, tiffData.length, null);
+ 			if (!fs.writeSync(fd, tiffData, 0, tiffData.length, null)) {
+ 				return callback("Write error");
+ 			}
 
  			require('imagemagick').convert([tiffPath,artworkPath], function(err) {
  				if (err) return callback("Convert failed");

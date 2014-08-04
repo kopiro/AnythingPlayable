@@ -25,10 +25,11 @@ function emitCurrent(socket, check) {
 
 	P.getCurrent(function(err, now) {
 		if (err || !now) return;
-		if (check && (_id===now._id)) return;
-		_id = now._id;
-
-		console.log("[SERVER] Song changed!");
+		if (check) {
+			if (_id===now._id) return;
+			_id = now._id;
+			console.log("[SERVER] Song changed!");
+		}
 
 		socket.emit('current', now);
 	});

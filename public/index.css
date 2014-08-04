@@ -8,8 +8,12 @@ body {
 }
 
 a {
-	color: #fff !important;
+	color: #fff;
 	text-decoration: none !important;
+}
+
+a:hover {
+	color: #fff;
 }
 
 #bg, #art{
@@ -28,8 +32,9 @@ a {
 
 #art {
 	z-index: -1;
-	-webkit-transform: scale(3) translateY(93px);
-	-webkit-filter: blur(4px);
+	background-size: cover;
+	background-position: center;
+	-webkit-filter: blur(10px);
 }
 
 #main {
@@ -41,8 +46,8 @@ a {
 	bottom: 0;
 	-webkit-box-sizing: border-box;
 	padding: 5px;
-	box-shadow: inset 3px 4px 10px rgba(0,0,0,.5);
-	background-image: -webkit-linear-gradient(top, rgba(0,0,0,.1) 0%, rgba(0,0,0,.5) 100%);
+	box-shadow: inset 0 0 10px rgba(0,0,0,.5);
+	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.8) 100%);
 	padding-top: 40px;
 	overflow: auto;
 }
