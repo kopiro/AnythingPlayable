@@ -1,4 +1,4 @@
-global.__CACHE__ = __dirname+'/cache';
+global.__CACHE__ = __dirname + '/cache';
 
 var app = require('express')();
 var http = require('http').Server(app);
@@ -26,7 +26,7 @@ function emitCurrent(socket, check) {
 	P.getCurrent(function(err, now) {
 		if (err || !now) return;
 		if (check) {
-			if (_id===now._id) return;
+			if (_id === now._id) return;
 			_id = now._id;
 			console.log("[SERVER] Song changed!");
 		}

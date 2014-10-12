@@ -4,9 +4,9 @@ var STATE_INTV = null;
 
 function secToMin(x) {
 	var m = Math.floor(x/60);
-	var s = (x-m*60);
-	if (s<10) s = '0'+s;
-	return m+":"+s;
+	var s = (x - m * 60);
+	if (s < 10) s = '0' + s;
+	return m + ':' + s;
 }
 
 var UI = {};
@@ -47,7 +47,7 @@ socket.on('state', function(e) {
 
 	// hack the system
 	clearInterval(STATE_INTV);
-	if (STATE.state==='PLAYING') {
+	if (STATE.state === 'PLAYING') {
 		STATE_INTV = setInterval(function() {
 			STATE.position++;
 			UI.updateState();
@@ -74,6 +74,6 @@ $('#control-next').hammer().bind('click', function() {
 });
 
 $('body').hammer().bind('swipe', function(e) {
-	if (e.gesture.direction===4) socket.emit('player.previous');
-	else if (e.gesture.direction===2) socket.emit('player.next');
+	if (e.gesture.direction === 4) socket.emit('player.previous');
+	else if (e.gesture.direction === 2) socket.emit('player.next');
 });
