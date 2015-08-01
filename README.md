@@ -6,17 +6,15 @@ Node.JS Server to control from **ANY** device, **Anything *that is* Playable**  
 
 ### Installation
 
-Clone this repo, and type:
-
 ```
 brew install libtiff && brew install imagemagick --with-libtiff
-sudo npm install
+npm install anything-playable
 ```
 
 ### Run
 
 ```
-node server.js
+node /usr/local/npm/anything-playable/server.js
 ```
 
 Go to `http://localhost:9999/public` to view the web interface.
