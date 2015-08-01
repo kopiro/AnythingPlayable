@@ -1,16 +1,15 @@
 {
-  "name": "AnythingPlayableServer",
-  "version": "0.0.1",
+  "name": "anything-playable",
+  "version": "1.0.0",
   "author": {
     "name": "Flavio De Stefano",
     "email": "destefano.flavio@gmail.com"
   },
   "dependencies": {
     "express": "^4.7.2",
-    "imagemagick": "^0.1.3",
-    "mdns": "^2.2.0",
+    "request": "^2.60.0",
     "socket.io": "^1.0.6",
-    "spotify-node-applescript": "git+https://github.com/kopiro/spotify-node-applescript",
+    "spotify-node-applescript": "^0.2.2",
     "underscore": "^1.6.0"
   }
 }

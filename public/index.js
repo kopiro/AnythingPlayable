@@ -13,6 +13,7 @@ var UI = {};
 
 UI.updateCurrent = function() {
 	if (!CURRENT) return;
+	console.log('CURRENT', CURRENT);
 
 	$('#current-name').text(CURRENT.name);
 	$('#current-artist').text(CURRENT.artist);
@@ -24,12 +25,15 @@ UI.updateCurrent = function() {
 UI.updateState = function() {
 	if (!STATE) return;
 
-	if (CURRENT) $('#status-real').css('width', 100*STATE.position/CURRENT.duration+'%');
+	if (CURRENT) {
+		$('#status-real').css('width', 100*STATE.position/CURRENT.duration+'%');
+	}
+
 	$('#status-position').text(secToMin(STATE.position));
 
 	$('#control-main').attr('class', ({
-		'PAUSED': 'fa fa-play',
-		'PLAYING': 'fa fa-pause'
+		'0': 'fa fa-play',
+		'1': 'fa fa-pause'
 	}[STATE.state]));
 };
 
@@ -38,21 +42,14 @@ var socket = io();
 
 socket.on('current', function(e) {
 	CURRENT = e;
+	console.log('CURRENT', e);
 	UI.updateCurrent();
 });
 
 socket.on('state', function(e) {
 	STATE = e;
+	console.log('STATE', e);
 	UI.updateState();
-
-	// hack the system
-	clearInterval(STATE_INTV);
-	if (STATE.state === 'PLAYING') {
-		STATE_INTV = setInterval(function() {
-			STATE.position++;
-			UI.updateState();
-		}, 1000);
-	}
 });
 
 

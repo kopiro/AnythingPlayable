@@ -1,81 +1,79 @@
-global.__CACHE__ = __dirname + '/cache';
+var __PORT__ = 9999;
 
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var _ = require('underscore');
 
-var _id = null;
-var P = new (require('./lib/provider'))('spotify');
+var provider = require('./lib/provider');
+var sockets = [];
 
-setInterval(function() {
-	emitState(null);
-	emitCurrent(null, true);
-}, 500);
+function emitState() {
+	provider.getState(function(state) {
+		if (state == null) return;
+		sockets.forEach(function(socket) {
 
-function emitState(socket) {
-	socket = socket || io;
+			if (state.state != socket.state) {
+				console.log('[CLIENT-'+socket.index+'] Status changed', socket.state, state.state);
+				socket.state = state.state;
+				socket.emit('state', state);
+			}
 
-	P.getState(function(err, state) {
-		socket.emit('state', state);
+			if (socket.track_id !== state.track_id) {
+				console.log('[CLIENT-'+socket.index+'] Song changed', socket.track_id, state.track_id);
+				socket.track_id = state.track_id;
+				provider.getCurrent(function(track) {
+					socket.emit('current', track);
+				});
+			}
+		});
 	});
 }
 
-function emitCurrent(socket, check) {
-	socket = socket || io;
+app.use('/public', require('express').static(__dirname + '/public'));
 
-	P.getCurrent(function(err, now) {
-		if (err || !now) return;
-		if (check) {
-			if (_id === now._id) return;
-			_id = now._id;
-			console.log("[SERVER] Song changed!");
-		}
+io.on('connection', function(socket) {
+	socket.index = sockets.length;
+	socket.track_id = null;
+	socket.state = null;
 
-		socket.emit('current', now);
-	});
-}
-
-
-app.use('/public', require('express').static(__dirname+'/public'));
-
-io.on('connection', function(socket){
-	console.log('[SERVER] User connected');
-
-	emitCurrent(socket);
-	emitState(socket);
+	console.log('[CLIENT-'+socket.index+'] Connected');
 
 	socket.on('disconnect', function(){
-		console.log('[SERVER] User disconnected');
+		sockets.splice(socket.index, 1);
+		console.log('[CLIENT-'+socket.index+'] Disconnected');
 	});
 
 	socket.on('player.playpause', function() {
-		P.playPause(function(){
-			emitState();
+		console.log('[CLIENT-'+socket.index+'] PlayPause');
+		provider.playPause(function(){
+			emitState(socket);
 		});
 	});
 
 	socket.on('player.next', function() {
-		P.next(function(){
-			emitCurrent();
-			emitState();
+		console.log('[CLIENT-'+socket.index+'] Next');
+		provider.next(function(){
+			emitState(socket);
 		});
 	});
 
 	socket.on('player.previous', function() {
-		P.previous(function(){
-			emitCurrent();
-			emitState();
+		console.log('[CLIENT-'+socket.index+'] Previous');
+		provider.previous(function(){
+			emitState(socket);
 		});
 	});
 
+	sockets.push( socket );
 });
 
+setInterval(emitState, 1000);
 
-app.get('/current/artwork', function(req, res) {
-	P.getCurrentArtwork(function(err, o) {
-		if (err) return res.end();
-		res.sendfile(o);
-	});
-});
+//////////
+// Init //
+//////////
 
-http.listen(9999);
+provider.set('spotify');
+http.listen(__PORT__);
+// require('child_process').exec('open http://localhost:' + __PORT__ + '/public');
