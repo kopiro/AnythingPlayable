@@ -151,6 +151,7 @@ h1, h2, h3, h4, h5, h6 {
 	border-radius: 50%;
 	border: 2px solid rgba(255,255,255,.9);
 	-webkit-transition: -webkit-transform .1s;
+	box-sizing: border-box;
 }
 
 #control-next:active,
@@ -164,4 +165,10 @@ h1, h2, h3, h4, h5, h6 {
 
 #control-main.fa-play {
 	padding-left: 9px;
+}
+
+#volume {
+	margin-top: 20px;
+	width: 100%;
+	display: block;
 }

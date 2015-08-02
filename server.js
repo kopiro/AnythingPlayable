@@ -10,32 +10,38 @@ var sockets = [];
 
 function emitState() {
 	provider.getState(function(state) {
-		if (state == null) return;
+		if (state == null) {
+			console.error("[SERVER] Unknown status");
+			return;
+		}
+
 		sockets.forEach(function(socket) {
+			if (!_.isEqual(state, socket.state)) {
+				console.log('[CLIENT-'+socket.index+'] Status changed');
 
-			if (state.state != socket.state) {
-				console.log('[CLIENT-'+socket.index+'] Status changed', socket.state, state.state);
-				socket.state = state.state;
-				socket.emit('state', state);
-			}
+				console.log(state, socket.state);
+				if (state.track_id !== socket.state.track_id) {
+					console.log('[CLIENT-'+socket.index+'] Song changed');
 
-			if (socket.track_id !== state.track_id) {
-				console.log('[CLIENT-'+socket.index+'] Song changed', socket.track_id, state.track_id);
-				socket.track_id = state.track_id;
-				provider.getCurrent(function(track) {
-					socket.emit('current', track);
-				});
+					// Emit new track
+					provider.getCurrent(function(track) {
+						socket.emit('current', track);
+					});
+				}
+
+				// Set new status and emit
+				socket.state = state;
+				socket.emit('state', socket.state);
 			}
 		});
 	});
 }
 
-app.use('/public', require('express').static(__dirname + '/public'));
+app.use('/', require('express').static(__dirname + '/public'));
 
 io.on('connection', function(socket) {
 	socket.index = sockets.length;
-	socket.track_id = null;
-	socket.state = null;
+	socket.state = {};
 
 	console.log('[CLIENT-'+socket.index+'] Connected');
 
@@ -63,6 +69,11 @@ io.on('connection', function(socket) {
 		provider.previous(function(){
 			emitState(socket);
 		});
+	});
+
+	socket.on('player.volume', function(e) {
+		console.log('[CLIENT-'+socket.index+'] Volume');
+		provider.setVolume(e.value);
 	});
 
 	sockets.push( socket );

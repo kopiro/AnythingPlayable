@@ -11,10 +11,11 @@ exports.isRunning = function(callback) {
 	spotify.isRunning(function(err, result){
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(false);
+			if (callback) callback(false);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
 	});
 };
 
@@ -22,12 +23,14 @@ exports.getCurrent = function(callback) {
 	spotify.getTrack(function(err, result){
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
 		if (result.id == null) {
 			console.error(exports.__NAME__, "Result null");
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
 		var id = result.id.replace('spotify:track:', '');
@@ -42,7 +45,7 @@ exports.getCurrent = function(callback) {
 
 		if (TRACK_CACHE[id]) {
 			_.extend(track, TRACK_CACHE[id]);
-			callback(track);
+			if (callback) callback(track);
 		} else {
 
 			request('http://api.spotify.com/v1/tracks/' + id, function(err, response, online_track) {
@@ -54,7 +57,7 @@ exports.getCurrent = function(callback) {
 					 _.extend(track, TRACK_CACHE[id]);
 				} catch (ex) {}
 
-				callback(track);
+				if (callback) callback(track);
 			});
 
 		}
@@ -65,16 +68,13 @@ exports.getState = function(callback) {
 	spotify.getState(function(err, state) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		var state_enum = ({
-			"playing" : 1,
-			"paused"  : 0
-		})[state.state];
-
-		callback({
-			state: state_enum,
+		if (callback) callback({
+			state: ({stopped:-1,paused:0,playing:1})[state.state],
+			volume: state.volume,
 			track_id: state.track_id
 		});
 	});
@@ -85,10 +85,11 @@ exports.playPause = function(callback) {
 	spotify.playPause(function(err, result) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
 	});
 };
 
@@ -96,10 +97,11 @@ exports.pause = function(callback) {
 	spotify.pause(function(err, result) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
 	});
 };
 
@@ -107,10 +109,11 @@ exports.play = function(callback) {
 	spotify.play(function(err, result) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
 	});
 };
 
@@ -118,10 +121,11 @@ exports.previous = function(callback) {
 	spotify.previous(function(err, result) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
 	});
 };
 
@@ -129,9 +133,22 @@ exports.next = function(callback) {
 	spotify.next(function(err, result) {
 		if (err) {
 			console.error(exports.__NAME__, err);
-			return callback(null);
+			if (callback) callback(null);
+			return;
 		}
 
-		callback(result);
+		if (callback) callback(result);
+	});
+};
+
+exports.setVolume = function(value, callback) {
+	spotify.setVolume(value, function(err, result) {
+		if (err) {
+			console.error(exports.__NAME__, err);
+			if (callback) callback(null);
+			return;
+		}
+
+		if (callback) callback(result);
 	});
 };
