@@ -17,9 +17,11 @@
 	<div id="bg"></div>
 	<div id="art"></div>
 
+	<div id="no-connection-banner">The connection can't be estabilshed.</div>
+
 	<div id="main">
 
-		<div id="current-artwork"></div>
+		<img id="current-artwork" />
 		<div id="current-c">
 			<h1 id="current-name"></h1>
 			<h2 id="current-artist"></h2>
@@ -31,7 +33,13 @@
 			<a id="control-main" class="fa fa-play"></a>
 		</div>
 
-		<input type="range" min="0" max="100" id="volume" />
+		<div id="volume-container">
+			<i class="fa fa-volume-down"></i>
+			<div id="volume-input-container">
+				<input type="range" min="0" max="100" id="volume" />
+			</div>
+			<i class="fa fa-volume-up"></i>
+		</div>
 
 	</div>
 

@@ -27,7 +27,7 @@ exports.getCurrent = function(callback) {
 			return;
 		}
 
-		if (result.id == null) {
+		if (result.id === null) {
 			console.error(exports.__NAME__, "Result null");
 			if (callback) callback(null);
 			return;

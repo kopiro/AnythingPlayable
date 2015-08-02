@@ -5,6 +5,7 @@ body {
 	font-size: 12px;
 	text-align: center;
 	-webkit-font-smoothing: antialiased;
+	background: #000;
 }
 
 a {
@@ -40,12 +41,12 @@ a:hover {
 #main {
 	z-index: 1;
 	position: fixed;
-	left: 0px;
+	left: 0;
 	top: 0;
 	right: 0;
 	bottom: 0;
 	-webkit-box-sizing: border-box;
-	padding: 5px;
+	padding: 14px;
 	box-shadow: inset 0 0 10px rgba(0,0,0,.5);
 	background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.8) 100%);
 	padding-top: 40px;
@@ -68,7 +69,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #current-artwork {
-	background-size: cover;
 	width: 220px;
 	height: 220px;
 	display: block;
@@ -154,21 +154,57 @@ h1, h2, h3, h4, h5, h6 {
 	box-sizing: border-box;
 }
 
-#control-next:active,
-#control-prev:active {
-	-webkit-transform: scale(1.2);
-}
-
-#control-main:active {
-	-webkit-transform: scale(1.05);
-}
-
 #control-main.fa-play {
 	padding-left: 9px;
 }
 
-#volume {
+#volume-container {
 	margin-top: 20px;
-	width: 100%;
+	position: relative;
 	display: block;
+}
+
+#volume-container .fa-volume-down {
+	position: absolute;
+	left: 0;
+	font-size: 20px;
+}
+
+#volume-container .fa-volume-up {
+	position: absolute;
+	right: 0;
+	font-size: 20px;
+}
+
+#volume-container #volume-input-container {
+	position: absolute;
+	left: 30px;
+	right: 30px;
+}
+
+#volume-container #volume {
+	display: block;
+	width: 100%;
+}
+
+#no-connection-banner {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 60px;
+	background: red;
+	padding: 20px;
+	color: #fff;
+	z-index: 999;
+	font-size: 15px;
+	font-weight: bold;
+	box-sizing: border-box;
+	-webkit-transform: translateY(-60px);
+	-webkit-transition: -webkit-transform 300ms ease-out;
+}
+
+#no-connection-banner.visible {
+	-webkit-transform: translateY(0px);
 }

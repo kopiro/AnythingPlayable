@@ -36,6 +36,16 @@ socket.on('state', function(e) {
 	UI.updateState();
 });
 
+socket.on('connect', function() {
+	console.log('CONNECTION OK');
+	$('#no-connection-banner').removeClass('visible');
+});
+
+socket.on('disconnect', function() {
+	console.error('CONNECTION DOWN');
+	$('#no-connection-banner').addClass('visible');
+});
+
 
 ///////////////
 // Listeners //
